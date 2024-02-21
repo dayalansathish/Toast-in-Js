@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toast Notifications</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Protest Riot:wght@400;500;600;700&display=swap">
+
+
+  <style>
+    /* CSS for toast container and toast */
+    #toast-container {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 1000;
+    }
+
+    .toast {
+      background-color: #af8787;
+      color: black;
+      border: 2px solid af8787;
+      box-shadow: 5px 5px 5px rgb(119, 119, 119);
+      font-family: "Protest Riot";
+      font-weight: lighter;
+      letter-spacing: 2px;
+      font-size: 18px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* @keyframes slideIn {
+      from {
+        transform: translateX(50%);
+      }
+
+      to {
+        transform: translateX(100%);
+      }
+    } */
+
+    @keyframes slideOut {
+      from {
+        transform: translateY(100%);
+      }
+
+      to {
+        transform: translateY(0%);
+      }
+    }
+
+    .toast {
+      animation: slideOut 0.9s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="toast-container"></div>
+
+  <script>
+    // Function to display toast notification
+    function displayToast(message) {
+      const toastContainer = document.getElementById('toast-container');
+
+      // Create toast element
+      const toast = document.createElement('div');
+      toast.innerHTML = `<div aria-live="polite" aria-atomic="true" class="position-relative">
+  <div class="toast-container ">
+    <div class="toast">
+      <div class="toast-header">       
+        
+      </div>
+      <div class="toast-body">
+       ${message}
+      </div>
+    </div>`;
+
+      // Append toast to container
+      toastContainer.appendChild(toast);
+
+      // Automatically remove toast after 3 seconds
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);//toast timeout 3secs
+    }
+    
+    // Sample array of objects
+    const data = [
+      { message: "Welcome to 🤗" },
+      { message: "Jargon Handlers ❤️" },
+      { message: "How can I help you 💬..." },
+      { message: "Thank you 🤝" }
+    ];
+
+    // Function to display notifications one by one
+    function displayNotifications(index) {
+      // If all notifications are displayed, stop
+      if (index >= data.length) {
+        return;
+      }
+
+      // Display current notification
+      displayToast(data[index].message);
+
+      // Schedule the next notification after 5 seconds
+      setTimeout(() => {
+        displayNotifications(index + 1); // Call recursively with the next index
+      }, 5000);
+    }
+
+    // Start displaying notifications
+    displayNotifications(0);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Toast Array</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+<div class="container mt-5">
+
+  <div id="toast-container" class="toast-container position-absolute bottom-0 end-0 m-3">
+    <!-- Toasts will be dynamically added here -->
+  </div>
+
+</div>
+
+<script>
+//   const messages = [
+//     { text: "Message 1" },
+//     { text: "Message 2" },
+//     { text: "Message 3" }
+//   ];
+
+const data = [
+      { message: "Welcome to 🤗" },
+      { message: "Jargon Handlers ❤️" },
+      { message: "How can I help you 💬..." },
+      { message: "Thank you 🤝" }
+    ];
+
+  let index = 0;
+
+  function showToast() {
+    if (index < data.length) {
+      const dataIndex = data[index];
+      const toast = `
+
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+  <div class="toast-header ">
+    <img src="jargon.png" class="rounded me-2" alt="logo" width='40px' height='40px'>
+    <strong class="me-auto">Bootstrap Toast</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+  <div class="toast-body bg-warning-subtle ">
+    <p class='lead fw-semibold'>${dataIndex.message}</p>
+    </div>
+</div>
+      
+      `;
+      document.getElementById('toast-container').innerHTML = toast;
+      const toastElement = document.querySelector('.toast');
+      const toastInstance = new bootstrap.Toast(toastElement);
+      toastElement.addEventListener('hidden.bs.toast', function () {
+        
+        showToast(); 
+        // Show the next toast
+      });
+      toastInstance.show();
+      console.log(toastInstance)
+      index++;
+    } else {
+      clearInterval(intervalId);
+    }
+  }
+
+//   console.log(showToast)
+
+  const intervalId = setInterval(showToast, 5000);
+
+
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
